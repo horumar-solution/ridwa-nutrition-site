@@ -433,18 +433,18 @@
       .model-cards-section{padding:0 20px 48px}
 
       /* Hero */
-      .hero{height:62vmax;min-height:420px;max-height:600px}
-      .hero-slide>img{object-position:center 15%}
-      .hero-overlay{background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.78) 100%)}
-      .hero-content{left:20px;right:20px;max-width:100%;top:auto;bottom:100px;transform:none}
-      .hero-slide.active .hero-content{opacity:1;transform:none}
+      .hero{height:72vw;min-height:460px;max-height:620px}
+      .hero-slide>img{object-fit:cover;object-position:center top;transform:none}
+      .hero-slide.active>img{transform:none}
+      .hero-content{left:20px;right:20px;max-width:100%;top:50%;transform:translateY(-50%)}
+      .hero-slide.active .hero-content{opacity:1;transform:translateY(-50%)}
       .hero-title{font-size:clamp(1.8rem,6.5vw,2.5rem);line-height:1.1;margin-bottom:14px}
       .hero-sub{font-size:.85rem;line-height:1.7;margin-bottom:24px;max-width:100%}
       .hero-btns{gap:10px}
       .hero-tabs{display:none}
-      .hero-arrow{width:38px;height:38px;top:auto;bottom:20px}
-      .hero-arrow.left{left:20px}
-      .hero-arrow.right{right:20px}
+      .hero-arrow{width:38px;height:38px}
+      .hero-arrow.left{left:14px}
+      .hero-arrow.right{right:14px}
       .hero-eyebrow{font-size:.64rem;margin-bottom:12px}
 
       /* Buttons */
@@ -508,8 +508,7 @@
       .products-grid{grid-template-columns:1fr}
       .footer-grid{grid-template-columns:1fr;gap:24px}
       .hero-title{font-size:1.75rem}
-      .hero-content{bottom:80px;left:16px;right:16px}
-      .hero-sub{display:none}
+      .hero-sub{font-size:.82rem}
       .announce-bar{font-size:.66rem}
       .btn{padding:11px 20px;font-size:.76rem}
     }
