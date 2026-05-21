@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Ridwa Nutrition Center — premium supplements, Marine Collagen, skincare, and wellness products. Trusted by thousands across East Africa. Be Smart, Eat Smart." />
   <title>Ridwa Nutrition Center — Be Smart, Eat Smart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=DM+Sans:wght@300;400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ── Variables ────────────────────────────────── */
@@ -295,6 +297,11 @@
     .mec-cta:hover svg{transform:translateX(4px) translateY(-4px)}
 
     @media(prefers-reduced-motion:reduce){.mec-card,.mec-arch,.mec-arch-ring,.mec-arch-ring-outer,.mec-arch-base,.mec-tag,.mec-title,.mec-sub,.mec-cta{opacity:1;animation:none}}
+    @media(max-width:768px){
+      .coll-card::before{animation:none}
+      .testimonial-card{animation:none!important}
+      .how-center-circle::before{animation:none}
+    }
     @media(max-width:900px){.model-cards-grid{grid-template-columns:1fr;max-width:420px}}
     @media(max-width:768px){.model-cards-section{padding:52px 24px}}
 
@@ -386,6 +393,22 @@
     .fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
     .fade-up.visible{opacity:1;transform:translateY(0)}
 
+    /* ── Hamburger + Mobile Nav ───────────────────── */
+    .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;width:40px;height:40px;border-radius:var(--r-sm);transition:background .2s ease}
+    .nav-hamburger:hover{background:var(--green-pale)}
+    .nav-hamburger span{display:block;height:2px;width:22px;background:var(--forest);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
+    .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .nav-hamburger.open span:nth-child(2){opacity:0}
+    .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+    .mobile-nav{position:fixed;top:0;left:0;right:0;z-index:1100;background:var(--cream);padding:90px 32px 40px;display:flex;flex-direction:column;gap:0;transform:translateY(-100%);transition:transform .38s cubic-bezier(0.23,1,0.32,1);box-shadow:0 8px 40px rgba(19,64,42,.18)}
+    .mobile-nav.open{transform:translateY(0)}
+    .mobile-nav a{font-family:var(--font-label);font-size:1.1rem;font-weight:700;color:var(--forest);padding:16px 0;border-bottom:1px solid var(--gray-200);letter-spacing:.04em;transition:color .2s ease,padding-left .2s ease}
+    .mobile-nav a:last-child{border-bottom:none}
+    .mobile-nav a:hover{color:var(--gold);padding-left:8px}
+    .mobile-nav-overlay{position:fixed;inset:0;z-index:1050;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:opacity .3s ease;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+    .mobile-nav-overlay.open{opacity:1;pointer-events:all}
+
     /* ── Responsive ───────────────────────────────── */
     @media(max-width:1100px){
       .products-grid{grid-template-columns:repeat(2,1fr)}
@@ -393,33 +416,95 @@
       .collections-bento{grid-template-columns:1fr 1fr;height:auto}
       .coll-card{height:280px}
     }
+
     @media(max-width:768px){
-      .navbar{padding:0 20px}
+      /* Nav */
+      .navbar{padding:0 20px;height:64px}
       .nav-left{display:none}
-      .section{padding:52px 24px}
-      .model-cards-section{padding:0 24px 52px}
-      .hero{height:100svh}
-      .hero-content{left:28px;max-width:90%}
-      .hero-title{font-size:2.2rem}
+      .nav-hamburger{display:flex}
+      .nav-logo img{height:46px}
+
+      /* Announce bar */
+      .announce-bar{flex-wrap:wrap;gap:6px 14px;padding:8px 16px;font-size:.72rem;text-align:center;justify-content:center}
+      .announce-bar span[aria-hidden="true"]{display:none}
+
+      /* Sections */
+      .section{padding:48px 20px}
+      .model-cards-section{padding:0 20px 48px}
+
+      /* Hero */
+      .hero{height:100svh;min-height:560px}
+      .hero-content{left:20px;right:20px;max-width:100%;top:50%;transform:translateY(-50%)}
+      .hero-slide.active .hero-content{transform:translateY(-58%)}
+      .hero-title{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.08}
+      .hero-sub{font-size:.88rem;margin-bottom:28px;max-width:100%}
+      .hero-btns{gap:10px}
       .hero-tabs{display:none}
-      .trust-bar{flex-direction:column;padding:24px}
-      .trust-brand{border-right:none;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:16px}
-      .trust-pills{flex-direction:column}
-      .collections-bento{grid-template-columns:1fr}
-      .products-grid{grid-template-columns:1fr 1fr}
-      .model-cards-grid{grid-template-columns:1fr}
-      .mec-card{height:420px}
-      .how-radial{height:auto;display:flex;flex-direction:column;gap:16px;align-items:center}
-      .how-center-circle{position:static;width:200px;height:200px;transform:none!important;animation:howProductFloat 4s ease-in-out infinite}
-      .how-node{position:static;width:90%;transform:none!important}
+      .hero-arrow{width:38px;height:38px}
+      .hero-eyebrow{font-size:.65rem}
+
+      /* Buttons */
+      .btn{padding:12px 24px;font-size:.78rem}
+
+      /* Trust bar */
+      .trust-bar{flex-direction:column;padding:20px}
+      .trust-brand{border-right:none;border-bottom:1px solid rgba(255,255,255,.15);padding:0 0 16px;min-width:unset}
+      .trust-pills{flex-direction:column;gap:0}
+      .trust-pill{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:14px 0}
+      .trust-pill:last-child{border-bottom:none}
+
+      /* Collections */
+      .collections-bento{grid-template-columns:1fr;height:auto}
+      .coll-card{height:240px}
+      .collections-header{flex-direction:column;gap:16px;align-items:flex-start}
+      .coll-header-title{font-size:1.9rem}
+
+      /* Products */
+      .products-grid{grid-template-columns:1fr 1fr;gap:14px}
+      .product-img-wrap{height:180px}
+      .section-header-row{flex-direction:column;gap:12px;align-items:flex-start;margin-bottom:28px}
+
+      /* Model cards */
+      .model-cards-grid{grid-template-columns:1fr;max-width:100%}
+      .mec-card{height:auto;padding:32px 24px 28px}
+      .mec-arch{width:180px;height:260px}
+      .mec-arch-wrap{width:180px}
+      .mec-title{font-size:1.5rem}
+
+      /* How to use */
+      .how-radial{height:auto;display:flex;flex-direction:column;gap:14px;align-items:center;padding:0 4px}
+      .how-center-circle{position:static;width:190px;height:190px;transform:none!important;animation:howProductFloat 4s ease-in-out infinite}
+      .how-node{position:static;width:100%;transform:none!important}
       .how-radial-svg{display:none}
-      .testimonials-wrap{grid-template-columns:1fr}
-      .testimonial-card{margin-top:0!important}
-      .footer{padding:0 24px 24px}
-      .footer-top{flex-direction:column;gap:20px;text-align:center}
-      .footer-grid{grid-template-columns:1fr;gap:28px}
-      .newsletter{padding:60px 24px}
-      .newsletter-form{flex-direction:column}
+      .how-section-title{font-size:1.9rem}
+      .how-title-wrap{margin-bottom:36px}
+
+      /* Testimonials */
+      .testimonials-wrap{grid-template-columns:1fr;gap:16px}
+      .testimonial-card{margin-top:0!important;animation:none}
+
+      /* Newsletter */
+      .newsletter{padding:56px 20px}
+      .newsletter h2{font-size:2rem}
+      .newsletter-form{flex-direction:column;gap:10px}
+
+      /* Footer */
+      .footer{padding:0 20px 28px}
+      .footer-top{flex-direction:column;gap:18px;text-align:center;padding:32px 0 28px}
+      .footer-top-socials{justify-content:center}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:28px;margin-bottom:32px}
+      .footer-bottom{font-size:.7rem}
+
+      /* Section titles */
+      .section-title{font-size:1.9rem}
+      .model-cards-section-header h2{font-size:2rem}
+    }
+
+    @media(max-width:480px){
+      .products-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr;gap:24px}
+      .hero-title{font-size:1.9rem}
+      .announce-bar{font-size:.68rem}
     }
   </style>
 </head>
@@ -446,6 +531,9 @@
   <div class="nav-logo">
     <a href="#"><img src="images/logo of company.png" alt="Ridwa Nutrition Center" /></a>
   </div>
+  <button type="button" class="nav-hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-right">
     <button class="nav-icon-btn" aria-label="Search">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -459,6 +547,16 @@
     </button>
   </div>
 </nav>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <a href="#" onclick="closeMobileNav()">Home</a>
+  <a href="#" onclick="closeMobileNav()">Products</a>
+  <a href="#" onclick="closeMobileNav()">Collections</a>
+  <a href="#" onclick="closeMobileNav()">About Us</a>
+  <a href="#" onclick="closeMobileNav()">Blog</a>
+</div>
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
 
 <!-- Hero Slider -->
 <section class="hero" id="hero">
@@ -476,7 +574,7 @@
     </div>
   </div>
   <div class="hero-slide">
-    <img src="images/hero section 2.jpeg" alt="Marine Collagen" />
+    <img src="images/hero section 2.jpeg" alt="Marine Collagen" loading="lazy" />
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">Best Seller</div>
@@ -489,7 +587,7 @@
     </div>
   </div>
   <div class="hero-slide">
-    <img src="images/hero section 3.jpeg" alt="Daily Vitamins" />
+    <img src="images/hero section 3.jpeg" alt="Daily Vitamins" loading="lazy" />
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">Summer Wellness</div>
@@ -561,7 +659,7 @@
   <div class="collections-bento">
     <!-- Large left card — spans both rows -->
     <div class="coll-card coll-card-large coll-large">
-      <img src="images/new arrival .jpeg" alt="New Arrivals" />
+      <img src="images/new arrival .jpeg" alt="New Arrivals" loading="lazy" />
       <div class="coll-overlay">
         <span class="coll-badge">Just Landed</span>
         <div class="coll-title">New Arrivals</div>
@@ -571,7 +669,7 @@
     </div>
     <!-- Top-right small card -->
     <div class="coll-card">
-      <img src="images/discount collaction.png" alt="Discount Collection" />
+      <img src="images/discount collaction.png" alt="Discount Collection" loading="lazy" />
       <div class="coll-overlay">
         <span class="coll-badge">Up to 40% Off</span>
         <div class="coll-title">Discount Collection</div>
@@ -583,7 +681,7 @@
     </div>
     <!-- Bottom-right small card -->
     <div class="coll-card">
-      <img src="images/summar collocation.png" alt="Summer Collection" />
+      <img src="images/summar collocation.png" alt="Summer Collection" loading="lazy" />
       <div class="coll-overlay">
         <span class="coll-badge">Summer Essentials</span>
         <div class="coll-title">Summer Collection</div>
@@ -610,7 +708,7 @@
 
     <div class="product-card">
       <div class="product-img-wrap">
-        <img src="images/product 2.jpeg" alt="Marine Collagen" />
+        <img src="images/product 2.jpeg" alt="Marine Collagen" loading="lazy" />
         <span class="product-badge badge-green">Best Seller</span>
         <button class="product-wish">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -632,7 +730,7 @@
 
     <div class="product-card">
       <div class="product-img-wrap">
-        <img src="images/product 1.jpeg" alt="Eucerin Lotion" />
+        <img src="images/product 1.jpeg" alt="Eucerin Lotion" loading="lazy" />
         <span class="product-badge badge-green">Top Rated</span>
         <button class="product-wish">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -654,7 +752,7 @@
 
     <div class="product-card">
       <div class="product-img-wrap">
-        <img src="images/product 3.jpeg" alt="Inositol Capsules" />
+        <img src="images/product 3.jpeg" alt="Inositol Capsules" loading="lazy" />
         <span class="product-badge badge-red">−20%</span>
         <button class="product-wish">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -676,7 +774,7 @@
 
     <div class="product-card">
       <div class="product-img-wrap">
-        <img src="images/hero section 11.png" alt="Centella Serum" />
+        <img src="images/hero section 11.png" alt="Centella Serum" loading="lazy" />
         <span class="product-badge badge-blue">New</span>
         <button class="product-wish">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -714,7 +812,7 @@
         <div class="mec-arch-ring"></div>
         <div class="mec-arch-ring mec-arch-ring-outer"></div>
         <div class="mec-arch">
-          <img src="images/model {1 }.png" alt="Model holding serum" />
+          <img src="images/model {1 }.png" alt="Model holding serum" loading="lazy" />
         </div>
         <div class="mec-arch-base"></div>
       </div>
@@ -736,7 +834,7 @@
         <div class="mec-arch-ring"></div>
         <div class="mec-arch-ring mec-arch-ring-outer"></div>
         <div class="mec-arch">
-          <img src="images/model {2}.png" alt="Model holding toner" />
+          <img src="images/model {2}.png" alt="Model holding toner" loading="lazy" />
         </div>
         <div class="mec-arch-base"></div>
       </div>
@@ -772,7 +870,7 @@
       <circle cx="210" cy="380" r="4" fill="#3d8b3d" opacity=".5"/>
       <circle cx="570" cy="380" r="4" fill="#3d8b3d" opacity=".5"/>
     </svg>
-    <div class="how-center-circle"><img src="images/display product.png" alt="Marine Collagen" /></div>
+    <div class="how-center-circle"><img src="images/display product.png" alt="Marine Collagen" loading="lazy" /></div>
     <div class="how-center-label">Marine Collagen</div>
     <div class="how-node how-node-tl">
       <div class="how-node-num">01</div>
@@ -908,6 +1006,28 @@
 </footer>
 
 <script>
+  /* Mobile Nav */
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+  function openMobileNav() {
+    menuBtn.classList.add('open');
+    mobileNav.classList.add('open');
+    mobileNavOverlay.classList.add('open');
+    menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileNav() {
+    menuBtn.classList.remove('open');
+    mobileNav.classList.remove('open');
+    mobileNavOverlay.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.contains('open') ? closeMobileNav() : openMobileNav();
+  });
+
   /* Hero Slider */
   let cur = 0;
   const hSlides = document.querySelectorAll('.hero-slide');
