@@ -393,6 +393,70 @@
     .fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
     .fade-up.visible{opacity:1;transform:translateY(0)}
 
+    /* ── Design Taste Enhancements ──────────────────────────────── */
+    :root{
+      --ease-expo:cubic-bezier(0.16,1,0.3,1);
+      --ease-back:cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    /* Premium easing on scroll reveals */
+    .fade-up{transition:opacity .65s var(--ease-expo),transform .65s var(--ease-expo)}
+
+    /* Staggered product card cascade */
+    .products-grid .product-card{opacity:0;transform:translateY(22px);transition:opacity .55s var(--ease-expo),transform .55s var(--ease-expo),box-shadow .3s ease,border-color .3s ease}
+    .products-grid .product-card:nth-child(1){transition-delay:0ms}
+    .products-grid .product-card:nth-child(2){transition-delay:80ms}
+    .products-grid .product-card:nth-child(3){transition-delay:160ms}
+    .products-grid .product-card:nth-child(4){transition-delay:240ms}
+    .products-grid .product-card.revealed{opacity:1;transform:translateY(0)}
+
+    /* Spotlight radial glow on product + testimonial cards */
+    .product-card,.testimonial-card{position:relative;overflow:hidden}
+    .product-card::after,.testimonial-card::after{content:'';position:absolute;inset:0;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(201,147,58,.09),transparent 68%);opacity:0;transition:opacity .4s ease;pointer-events:none;z-index:0;border-radius:inherit}
+    .product-card:hover::after,.testimonial-card:hover::after{opacity:1}
+    .product-card>*,.testimonial-card>*{position:relative;z-index:1}
+
+    /* Tactile button press — physical push feel */
+    .btn:active{transform:scale(.96) translateY(1px)!important;transition:transform .1s ease!important}
+    .product-add:active{transform:scale(.95)!important;transition:transform .1s ease!important}
+    .mec-cta:active{transform:scale(.95)!important}
+    .how-node:active{transform:scale(.97)!important}
+
+    /* Spring-like trust pill icon hover */
+    .trust-pill:hover .trust-pill-icon{transform:scale(1.22) rotate(14deg);transition:transform .38s var(--ease-back)}
+
+    /* Section link — snappy arrow gap */
+    .section-link{transition:color .22s var(--ease-expo),gap .22s var(--ease-expo)}
+    .section-link:hover{gap:12px}
+
+    /* Footer link — smooth indent */
+    .footer-col ul li a{transition:color .22s var(--ease-expo),padding-left .22s var(--ease-expo)}
+
+    /* Newsletter input — premium focus ring */
+    .newsletter-form input:focus{border-color:var(--amber);background:rgba(255,255,255,.14);box-shadow:0 0 0 4px rgba(232,184,109,.15);transition:all .25s var(--ease-expo)}
+
+    /* How-to node — expo hover */
+    .how-node{transition:transform .32s var(--ease-expo),box-shadow .32s ease}
+
+    /* Collection overlay — smoother reveal */
+    .coll-overlay{transition:background .4s var(--ease-expo)}
+    .coll-card:hover .coll-overlay{background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.18) 55%,transparent 100%)}
+
+    /* Hero content — expo entrance */
+    .hero-content{transition:opacity .7s var(--ease-expo) .25s,transform .7s var(--ease-expo) .25s}
+
+    /* Global focus-visible ring */
+    :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+    button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+    /* Navbar link — expo underline */
+    .nav-left a::after{transition:width .28s var(--ease-expo)}
+
+    /* Mobile: disable spotlight (no hover on touch) */
+    @media(hover:none){
+      .product-card::after,.testimonial-card::after{display:none}
+    }
+
     /* ── Hamburger + Mobile Nav ───────────────────── */
     .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;width:40px;height:40px;border-radius:var(--r-sm);transition:background .2s ease}
     .nav-hamburger:hover{background:var(--green-pale)}
@@ -1053,6 +1117,25 @@
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up, .model-cards-section-header, .mec-card').forEach(el => io.observe(el));
+
+  /* Staggered product card reveal */
+  const cardIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); cardIo.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.products-grid .product-card').forEach(c => cardIo.observe(c));
+
+  /* Spotlight: track mouse over product + testimonial cards */
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.product-card, .testimonial-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+    });
+  }
 
   /* Wishlist toggle */
   document.querySelectorAll('.product-wish').forEach(btn => {
