@@ -388,7 +388,12 @@
     .wa-float svg { width: 28px; height: 28px; color: #fff; }
 
     /* ── Fade-in ── */
-    .fade-in { opacity: 0; transform: translateY(28px); }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s cubic-bezier(0.23,1,0.32,1), transform .85s cubic-bezier(0.23,1,0.32,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
@@ -998,13 +1003,17 @@
     }
   });
 
-  /* ── GSAP scroll animations ── */
-  gsap.utils.toArray('.fade-in').forEach(el => {
-    gsap.from(el, {
-      y: 36, opacity: 0, duration: .9, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 78%', once: true }
+  /* ── Scroll reveal (IntersectionObserver — reliable, no GSAP dependency) ── */
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        fadeObserver.unobserve(e.target);
+      }
     });
-  });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => fadeObserver.observe(el));
 
   /* Philosophy words */
   gsap.from('.mword', {
